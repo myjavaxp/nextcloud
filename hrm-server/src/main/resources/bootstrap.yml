@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: hrm-server
+  cloud:
+    consul:
+      host: 127.0.0.1
+      port: 8500
+      discovery:
+        health-check-interval: 15s
+        enabled: true
+        register: true
+        prefer-ip-address: true
+      enabled: true
+  zipkin:
+    base-url: http://127.0.0.1:9411/
+    sender:
+      type: web
+  sleuth:
+    sampler:
+      probability: 1
+server:
+  port: 8080

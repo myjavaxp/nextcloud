@@ -1,0 +1,52 @@
+spring:
+  application:
+    name: oauth
+  cloud:
+    consul:
+      host: 127.0.0.1
+      port: 8500
+      discovery:
+        health-check-interval: 15s
+        enabled: true
+        register: true
+        prefer-ip-address: true
+      enabled: true
+  zipkin:
+    base-url: http://127.0.0.1:9411/
+    sender:
+      type: web
+  sleuth:
+    sampler:
+      probability: 1
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: com.mysql.jdbc.Driver
+    username: root
+    password: root
+    url: jdbc:mysql://localhost:3306/cloud?useUnicode=true&characterEncoding=UTF-8&useSSL=false
+    hikari:
+      minimum-idle: 5
+      maximum-pool-size: 20
+      max-lifetime: 1800000
+      idle-timeout: 30000
+      auto-commit: true
+      connection-test-query: SELECT 1
+  redis:
+    lettuce:
+      pool:
+        max-active: 2000
+        max-idle: 500
+        min-idle: 50
+        max-wait: 100000ms
+    timeout: 3000ms
+    host: localhost
+    port: 6379
+    database: 0
+  http:
+    encoding:
+      charset: utf-8
+server:
+  port: 8888
+mybatis:
+  type-aliases-package: com.yibo.oauth.entity
+  mapper-locations: classpath:mapper/*.xml
