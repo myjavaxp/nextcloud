@@ -48,5 +48,8 @@ spring:
 server:
   port: 8888
 mybatis:
-  type-aliases-package: com.yibo.oauth.entity
+  type-aliases-package: com.yibo.entity.oauth
   mapper-locations: classpath:mapper/*.xml
+logging:
+  level:
+    com.yibo.oauth.dao: debug

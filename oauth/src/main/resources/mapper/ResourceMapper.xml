@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yibo.oauth.dao.ResourceMapper">
-  <resultMap id="BaseResultMap" type="com.yibo.oauth.entity.Resource">
+  <resultMap id="BaseResultMap" type="com.yibo.entity.oauth.Resource">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="content" jdbcType="VARCHAR" property="content" />
     <result column="type" jdbcType="TINYINT" property="type" />
@@ -19,13 +19,13 @@
     delete from resource
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.yibo.oauth.entity.Resource">
+  <insert id="insert" parameterType="com.yibo.entity.oauth.Resource">
     insert into resource (id, content, type
       )
     values (#{id,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR}, #{type,jdbcType=TINYINT}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.yibo.oauth.entity.Resource">
+  <insert id="insertSelective" parameterType="com.yibo.entity.oauth.Resource">
     insert into resource
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -50,7 +50,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.yibo.oauth.entity.Resource">
+  <update id="updateByPrimaryKeySelective" parameterType="com.yibo.entity.oauth.Resource">
     update resource
     <set>
       <if test="content != null">
@@ -62,7 +62,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.yibo.oauth.entity.Resource">
+  <update id="updateByPrimaryKey" parameterType="com.yibo.entity.oauth.Resource">
     update resource
     set content = #{content,jdbcType=VARCHAR},
       type = #{type,jdbcType=TINYINT}

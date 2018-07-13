@@ -1,4 +1,4 @@
-package com.yibo.oauth.entity;
+package com.yibo.entity.oauth;
 
 import java.io.Serializable;
 

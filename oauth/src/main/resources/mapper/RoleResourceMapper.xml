@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yibo.oauth.dao.RoleResourceMapper">
-  <resultMap id="BaseResultMap" type="com.yibo.oauth.entity.RoleResource">
+  <resultMap id="BaseResultMap" type="com.yibo.entity.oauth.RoleResource">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="role_id" jdbcType="BIGINT" property="roleId" />
     <result column="resource_id" jdbcType="INTEGER" property="resourceId" />
@@ -19,13 +19,13 @@
     delete from role_resource
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.yibo.oauth.entity.RoleResource">
+  <insert id="insert" parameterType="com.yibo.entity.oauth.RoleResource">
     insert into role_resource (id, role_id, resource_id
       )
     values (#{id,jdbcType=BIGINT}, #{roleId,jdbcType=BIGINT}, #{resourceId,jdbcType=INTEGER}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.yibo.oauth.entity.RoleResource">
+  <insert id="insertSelective" parameterType="com.yibo.entity.oauth.RoleResource">
     insert into role_resource
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -50,7 +50,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.yibo.oauth.entity.RoleResource">
+  <update id="updateByPrimaryKeySelective" parameterType="com.yibo.entity.oauth.RoleResource">
     update role_resource
     <set>
       <if test="roleId != null">
@@ -62,7 +62,7 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.yibo.oauth.entity.RoleResource">
+  <update id="updateByPrimaryKey" parameterType="com.yibo.entity.oauth.RoleResource">
     update role_resource
     set role_id = #{roleId,jdbcType=BIGINT},
       resource_id = #{resourceId,jdbcType=INTEGER}

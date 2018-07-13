@@ -1,6 +1,6 @@
 package com.yibo.oauth.dao;
 
-import com.yibo.oauth.entity.RoleResource;
+import com.yibo.entity.oauth.RoleResource;
 
 public interface RoleResourceMapper {
     int deleteByPrimaryKey(Long id);

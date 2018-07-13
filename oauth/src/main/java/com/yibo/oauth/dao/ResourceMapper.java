@@ -1,6 +1,6 @@
 package com.yibo.oauth.dao;
 
-import com.yibo.oauth.entity.Resource;
+import com.yibo.entity.oauth.Resource;
 
 public interface ResourceMapper {
     int deleteByPrimaryKey(Integer id);
