@@ -25,4 +25,7 @@
             <scope>provided</scope>
         </dependency>
     </dependencies>
+    <build>
+        <finalName>domain</finalName>
+    </build>
 </project>
