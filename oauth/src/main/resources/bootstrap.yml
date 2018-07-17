@@ -45,6 +45,9 @@ spring:
   http:
     encoding:
       charset: utf-8
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
 server:
   port: 8081
 mybatis:

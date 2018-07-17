@@ -25,7 +25,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import static com.yibo.oauth.constants.TokenConstant.*;
+import static com.yibo.constants.TokenConstant.*;
 import static io.jsonwebtoken.SignatureAlgorithm.HS256;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
@@ -85,6 +85,7 @@ public class SysUserServiceImpl implements SysUserService {
         Claims claims = Jwts.claims().setSubject(username);
         claims.put(ROLE_LIST, authorization.getRoleList());
         claims.put(RESOURCE_LIST, authorization.getResourceList());
+        claims.put(USER_ID, authorization.getUserId());
         String token = Jwts.builder()
                 .setClaims(claims)
                 .setExpiration(new Date(System.currentTimeMillis() + TOKEN_EXPIRATION)) //过期时间15天

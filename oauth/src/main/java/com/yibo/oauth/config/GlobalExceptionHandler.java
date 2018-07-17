@@ -6,6 +6,7 @@ import com.yibo.entity.common.Status;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.error.ErrorAttributes;
 import org.springframework.boot.web.servlet.error.ErrorController;
+import org.springframework.jdbc.BadSqlGrammarException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -45,6 +46,10 @@ public class GlobalExceptionHandler implements ErrorController {
         if (e instanceof NullPointerException) {
             e.printStackTrace();
             return ResponseEntity.ofStatus(Status.NULL_POINTER_EXCEPTION);
+        }
+        if (e instanceof BadSqlGrammarException) {
+            e.printStackTrace();
+            return ResponseEntity.ofStatus(Status.NOT_VALID_SQL);
         }
         WebRequest webRequest = new ServletWebRequest(request);
         Map<String, Object> errorAttributes = this.errorAttributes.getErrorAttributes(webRequest, false);

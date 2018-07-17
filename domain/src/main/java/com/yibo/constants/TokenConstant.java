@@ -1,4 +1,4 @@
-package com.yibo.oauth.constants;
+package com.yibo.constants;
 
 public class TokenConstant {
     public static final String BEARER = "Bearer ";
@@ -6,4 +6,5 @@ public class TokenConstant {
     public static final long TOKEN_EXPIRATION = 15 * 24 * 60 * 60 * 1000L;
     public static final String ROLE_LIST = "roleList";
     public static final String RESOURCE_LIST = "resourceList";
+    public static final String USER_ID = "userId";
 }
