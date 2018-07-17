@@ -23,4 +23,13 @@ public class HelloController {
         map.put("username", user.getUsername());
         return map;
     }
+
+    @GetMapping("/guest/{name}")
+    public Map<String, String> guest(@PathVariable("name") String name, HttpServletRequest request) {
+        SysUser sysUser = TokenUtil.getUser(request);
+        Map<String, String> map = new HashMap<>();
+        map.put("userId", sysUser.getId().toString());
+        map.put("username", sysUser.getUsername());
+        return map;
+    }
 }
