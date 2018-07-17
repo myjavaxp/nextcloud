@@ -18,6 +18,7 @@ import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import org.springframework.util.CollectionUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -72,7 +73,12 @@ public class SysUserServiceImpl implements SysUserService {
             redisTemplate.expire(token, TOKEN_REDIS_EXPIRATION, TimeUnit.SECONDS);
         } else {
             List<Role> roleList = sysUserMapper.selectRolesByUserId(user.getId());
-            List<Resource> resourceList = sysUserMapper.selectResourceListByRoleList(roleList);
+            List<Resource> resourceList;
+            if (CollectionUtils.isEmpty(roleList)) {
+                resourceList = null;
+            } else {
+                resourceList = sysUserMapper.selectResourceListByRoleList(roleList);
+            }
             userAuthorization = new UserAuthorization(user.getId(), username, roleList, resourceList);
             token = getToken(username, userAuthorization, valueOperations);
         }

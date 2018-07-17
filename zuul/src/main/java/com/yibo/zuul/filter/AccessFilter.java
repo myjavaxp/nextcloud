@@ -11,9 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -52,7 +52,6 @@ public class AccessFilter extends ZuulFilter {
     public Object run() throws ZuulException {
         RequestContext requestContext = RequestContext.getCurrentContext();
         HttpServletRequest request = requestContext.getRequest();
-        HttpServletResponse response = requestContext.getResponse();
         String requestURL = request.getRequestURL().toString();
         LOGGER.info("send {} request to {}", request.getMethod(), requestURL);
         if (requestURL.contains("login") || requestURL.contains("logout")) {
@@ -80,6 +79,10 @@ public class AccessFilter extends ZuulFilter {
             throw new ZuulException("请登陆后再操作", 401, "Token不一致");
         }
         List<LinkedHashMap> resourceList = (List<LinkedHashMap>) claims.get(RESOURCE_LIST);
+        if (CollectionUtils.isEmpty(resourceList)) {
+            LOGGER.error("用户:{}没有任何访问权限", username);
+            throw new ZuulException("用户没有分配任何权限", 401, "用户没有分配任何权限");
+        }
         String userId = claims.get(USER_ID).toString();
         List<String> urlList = new ArrayList<>();
         for (LinkedHashMap linkedHashMap : resourceList) {
@@ -90,7 +93,7 @@ public class AccessFilter extends ZuulFilter {
         if (urlList.stream().anyMatch(a -> a.equals("*"))) {
             stringRedisTemplate.expire(username, TOKEN_REDIS_EXPIRATION, TimeUnit.SECONDS);
             stringRedisTemplate.expire(token, TOKEN_REDIS_EXPIRATION, TimeUnit.SECONDS);
-            requestContext.addZuulRequestHeader(AUTHORIZATION,userId + "," + username);
+            requestContext.addZuulRequestHeader(AUTHORIZATION, userId + "," + username);
             return null;
         }
         if (urlList.stream().noneMatch(requestURL::contains)) {
@@ -99,7 +102,7 @@ public class AccessFilter extends ZuulFilter {
         }
         stringRedisTemplate.expire(username, TOKEN_REDIS_EXPIRATION, TimeUnit.SECONDS);
         stringRedisTemplate.expire(token, TOKEN_REDIS_EXPIRATION, TimeUnit.SECONDS);
-        requestContext.addZuulRequestHeader(AUTHORIZATION,userId + "," + username);
+        requestContext.addZuulRequestHeader(AUTHORIZATION, userId + "," + username);
         return null;
     }
 }
