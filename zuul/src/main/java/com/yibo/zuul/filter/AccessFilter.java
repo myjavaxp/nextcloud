@@ -13,6 +13,7 @@ import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -51,6 +52,7 @@ public class AccessFilter extends ZuulFilter {
     public Object run() throws ZuulException {
         RequestContext requestContext = RequestContext.getCurrentContext();
         HttpServletRequest request = requestContext.getRequest();
+        HttpServletResponse response = requestContext.getResponse();
         String requestURL = request.getRequestURL().toString();
         LOGGER.info("send {} request to {}", request.getMethod(), requestURL);
         if (requestURL.contains("login") || requestURL.contains("logout")) {
@@ -78,6 +80,7 @@ public class AccessFilter extends ZuulFilter {
             throw new ZuulException("请登陆后再操作", 401, "Token不一致");
         }
         List<LinkedHashMap> resourceList = (List<LinkedHashMap>) claims.get(RESOURCE_LIST);
+        String userId = claims.get(USER_ID).toString();
         List<String> urlList = new ArrayList<>();
         for (LinkedHashMap linkedHashMap : resourceList) {
             if (linkedHashMap.get("type").equals(1)) {
@@ -87,6 +90,7 @@ public class AccessFilter extends ZuulFilter {
         if (urlList.stream().anyMatch(a -> a.equals("*"))) {
             stringRedisTemplate.expire(username, TOKEN_REDIS_EXPIRATION, TimeUnit.SECONDS);
             stringRedisTemplate.expire(token, TOKEN_REDIS_EXPIRATION, TimeUnit.SECONDS);
+            requestContext.addZuulRequestHeader(AUTHORIZATION,userId + "," + username);
             return null;
         }
         if (urlList.stream().noneMatch(requestURL::contains)) {
@@ -95,6 +99,7 @@ public class AccessFilter extends ZuulFilter {
         }
         stringRedisTemplate.expire(username, TOKEN_REDIS_EXPIRATION, TimeUnit.SECONDS);
         stringRedisTemplate.expire(token, TOKEN_REDIS_EXPIRATION, TimeUnit.SECONDS);
+        requestContext.addZuulRequestHeader(AUTHORIZATION,userId + "," + username);
         return null;
     }
 }
