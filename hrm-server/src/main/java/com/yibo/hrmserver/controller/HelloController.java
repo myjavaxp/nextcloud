@@ -28,6 +28,7 @@ public class HelloController {
     public Map<String, String> guest(@PathVariable("name") String name, HttpServletRequest request) {
         SysUser sysUser = TokenUtil.getUser(request);
         Map<String, String> map = new HashMap<>();
+        map.put("你好", name);
         map.put("userId", sysUser.getId().toString());
         map.put("username", sysUser.getUsername());
         return map;
