@@ -13,10 +13,11 @@ import javax.annotation.Resource;
 public class CacheServiceImpl implements CacheService {
     @Resource
     private SysUserMapper sysUserMapper;
+
     @Override
     @Transactional(readOnly = true)
-    @Cacheable(cacheNames = "userPass",key = "#username")
-    public SysUser selectByUsername(String username){
+    @Cacheable(cacheNames = "userPass", key = "#username")
+    public SysUser selectByUsername(String username) {
         return sysUserMapper.selectByUsername(username);
     }
 }

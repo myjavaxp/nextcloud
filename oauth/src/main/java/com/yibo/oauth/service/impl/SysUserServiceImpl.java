@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
 import java.util.List;
@@ -94,5 +95,23 @@ public class SysUserServiceImpl implements SysUserService {
         redisTemplate.expire(username, TOKEN_REDIS_EXPIRATION, TimeUnit.SECONDS);
         redisTemplate.expire(token, TOKEN_REDIS_EXPIRATION, TimeUnit.SECONDS);
         return token;
+    }
+
+    @Override
+    public void logout(HttpServletRequest request) {
+        String header = request.getHeader(AUTHORIZATION);
+        if (null == header) {
+            return;
+        }
+        String token = header.replace(BEARER, "");
+        ValueOperations<String, String> valueOperations = redisTemplate.opsForValue();
+        String signingKey = valueOperations.get(token);
+        Claims claims = Jwts.parser()
+                .setSigningKey(signingKey)
+                .parseClaimsJws(token)
+                .getBody();
+        String username = claims.getSubject();
+        redisTemplate.delete(username);
+        redisTemplate.delete(token);
     }
 }

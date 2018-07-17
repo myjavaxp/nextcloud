@@ -28,3 +28,9 @@ zuul:
     oauth:
       path: /auth/**
       serviceId: oauth
+  sensitive-headers: Cookie,Set-Cookie
+
+hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds: 6000000
+ribbon:
+  ConnectTimeout: 3000
+  ReadTimeout: 60000

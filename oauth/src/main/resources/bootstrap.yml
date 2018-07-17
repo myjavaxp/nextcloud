@@ -46,7 +46,7 @@ spring:
     encoding:
       charset: utf-8
 server:
-  port: 8888
+  port: 8081
 mybatis:
   type-aliases-package: com.yibo.entity.oauth
   mapper-locations: classpath:mapper/*.xml
