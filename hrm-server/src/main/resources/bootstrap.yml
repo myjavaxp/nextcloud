@@ -10,7 +10,6 @@ spring:
         enabled: true
         register: true
         prefer-ip-address: true
-        service-name: hrm-server
       enabled: true
   zipkin:
     base-url: http://127.0.0.1:9411/

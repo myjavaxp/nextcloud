@@ -4,7 +4,6 @@ import com.yibo.shopserver.feign.HelloClient;
 import feign.hystrix.FallbackFactory;
 import org.springframework.stereotype.Component;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,16 +13,16 @@ public class HelloClientFallback implements FallbackFactory<HelloClient> {
     public HelloClient create(Throwable cause) {
         return new HelloClient() {
             @Override
-            public Map<String, String> guest(String name, HttpServletRequest request) {
+            public Map<String, String> guest(String name) {
                 Map<String, String> map = new HashMap<>();
-                map.put("hello", name);
+                map.put("熔断", name);
                 return map;
             }
 
             @Override
-            public Map<String, String> hello(String name, HttpServletRequest request) {
+            public Map<String, String> hello(String name) {
                 Map<String, String> map = new HashMap<>();
-                map.put("hi", name);
+                map.put("异常", name);
                 return map;
             }
         };

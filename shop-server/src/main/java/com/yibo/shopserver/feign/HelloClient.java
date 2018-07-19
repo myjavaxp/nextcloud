@@ -5,14 +5,13 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
-@FeignClient(value = "hrm-server",url = "http://127.0.0.1:8080/", fallbackFactory = HelloClientFallback.class)
+@FeignClient(value = "hrm-server", fallbackFactory = HelloClientFallback.class)
 public interface HelloClient {
-    @GetMapping("/guest/{name}")
-    Map<String, String> guest(@PathVariable("name") String name, HttpServletRequest request);
+    @GetMapping(value = "hello/guest/{name}")
+    Map<String, String> guest(@PathVariable("name") String name);
 
-    @GetMapping("/name/{name}")
-    Map<String, String> hello(@PathVariable("name") String name, HttpServletRequest request);
+    @GetMapping(value = "hello/name/{name}")
+    Map<String, String> hello(@PathVariable("name") String name);
 }

@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 @RestController
@@ -15,9 +14,9 @@ public class ShopController {
     private HelloClient helloClient;
 
     @GetMapping("/hi/{name}")
-    public Map<String, String> hi(@PathVariable("name") String name, HttpServletRequest request) {
-        Map<String, String> guest = helloClient.guest(name, request);
-        guest.putAll(helloClient.hello(name, request));
+    public Map<String, String> hi(@PathVariable("name") String name) {
+        Map<String, String> guest = helloClient.guest(name);
+        guest.putAll(helloClient.hello(name));
         return guest;
     }
 }

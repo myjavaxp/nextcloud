@@ -11,9 +11,9 @@ import java.util.Objects;
 
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
-@Configuration
+//@Configuration
 public class FeignConfig {
-    @Bean
+    //@Bean
     public RequestInterceptor requestInterceptor() {
         return requestTemplate -> {
             ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
