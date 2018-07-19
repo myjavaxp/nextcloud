@@ -12,6 +12,7 @@
         <module>zuul</module>
         <module>oauth</module>
         <module>domain</module>
+        <module>shop-server</module>
     </modules>
     <packaging>pom</packaging>
 

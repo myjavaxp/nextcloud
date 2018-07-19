@@ -9,7 +9,7 @@ import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 public class TokenUtil {
     public static SysUser getUser(HttpServletRequest request) {
         String header = request.getHeader(AUTHORIZATION);
-        if (null == header) {
+        if (null == header || "".equals(header) || !header.contains(",")) {
             return new SysUser(0L, "system");
         }
         int index = header.indexOf(",");
