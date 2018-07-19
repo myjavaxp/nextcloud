@@ -7,11 +7,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 
 public class JSONUtil {
-    private static ObjectMapper objectMapper = new ObjectMapper();
+    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
     public static String toJson(Object object) {
         try {
-            return objectMapper.writeValueAsString(object);
+            return OBJECT_MAPPER.writeValueAsString(object);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
@@ -20,7 +20,7 @@ public class JSONUtil {
 
     public static <T> T toObject(String string, Class<T> type) {
         try {
-            return objectMapper.readValue(string, type);
+            return OBJECT_MAPPER.readValue(string, type);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -32,7 +32,7 @@ public class JSONUtil {
      */
     public static <T> T toList(String string, TypeReference<T> typeReference) {
         try {
-            return objectMapper.readValue(string, typeReference);
+            return OBJECT_MAPPER.readValue(string, typeReference);
         } catch (Exception e) {
             e.printStackTrace();
         }
