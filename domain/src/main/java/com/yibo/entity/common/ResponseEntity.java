@@ -23,12 +23,6 @@ public class ResponseEntity<T> implements Serializable {
         this.message = OK.getReasonPhrase();
     }
 
-    public ResponseEntity(Integer status, String message, T data) {
-        this.status = status;
-        this.message = message;
-        this.data = data;
-    }
-
     public ResponseEntity(Integer status, String message) {
         this.status = status;
         this.message = message;
