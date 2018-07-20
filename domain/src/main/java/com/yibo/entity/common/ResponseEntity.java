@@ -34,20 +34,25 @@ public class ResponseEntity<T> implements Serializable {
         this.message = message;
     }
 
-    public static ResponseEntity ofSuccessMessage(String message) {
-        return new ResponseEntity<>(OK.value(), message, null);
+    public ResponseEntity(String message) {
+        this.status = OK.value();
+        this.message = message;
     }
 
-    public static ResponseEntity ofSuccessData(Object data) {
-        return new ResponseEntity<>(OK.value(), OK.getReasonPhrase(), data);
+    public ResponseEntity(T data) {
+        this.status = OK.value();
+        this.message = OK.getReasonPhrase();
+        this.data = data;
     }
 
-    public static ResponseEntity ofStatus(Status status) {
-        return new ResponseEntity<>(status.value(), status.getReasonPhrase(), null);
+    public ResponseEntity(Status status) {
+        this.status = status.value();
+        this.message = status.getReasonPhrase();
     }
 
-    public static ResponseEntity ofHttpStatus(HttpStatus httpStatus) {
-        return new ResponseEntity<>(httpStatus.value(), httpStatus.getReasonPhrase(), null);
+    public ResponseEntity(HttpStatus httpStatus) {
+        this.status = httpStatus.value();
+        this.message = httpStatus.getReasonPhrase();
     }
 
     public Date getTimestamp() {

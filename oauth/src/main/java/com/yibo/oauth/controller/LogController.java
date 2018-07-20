@@ -14,19 +14,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @RestController
-@SuppressWarnings("unchecked")
 public class LogController {
     @Resource
     private SysUserService sysUserService;
 
     @PostMapping("/login")
     public ResponseEntity<UserAuthorization> login(@RequestBody SysUser sysUser, HttpServletResponse response) {
-        return ResponseEntity.ofSuccessData(sysUserService.login(sysUser, response));
+        return new ResponseEntity<>(sysUserService.login(sysUser, response));
     }
 
     @GetMapping("/logout")
     public ResponseEntity logout(HttpServletRequest request) {
         sysUserService.logout(request);
-        return ResponseEntity.ofSuccessMessage("退出登陆成功");
+        return new ResponseEntity("退出登陆成功");
     }
 }

@@ -1,8 +1,8 @@
 package com.yibo.oauth.config;
 
-import com.yibo.exception.CommonException;
 import com.yibo.entity.common.ResponseEntity;
 import com.yibo.entity.common.Status;
+import com.yibo.exception.CommonException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.error.ErrorAttributes;
 import org.springframework.boot.web.servlet.error.ErrorController;
@@ -45,11 +45,11 @@ public class GlobalExceptionHandler implements ErrorController {
         }
         if (e instanceof NullPointerException) {
             e.printStackTrace();
-            return ResponseEntity.ofStatus(Status.NULL_POINTER_EXCEPTION);
+            return new ResponseEntity(Status.NULL_POINTER_EXCEPTION);
         }
         if (e instanceof BadSqlGrammarException) {
             e.printStackTrace();
-            return ResponseEntity.ofStatus(Status.NOT_VALID_SQL);
+            return new ResponseEntity(Status.NOT_VALID_SQL);
         }
         WebRequest webRequest = new ServletWebRequest(request);
         Map<String, Object> errorAttributes = this.errorAttributes.getErrorAttributes(webRequest, false);
