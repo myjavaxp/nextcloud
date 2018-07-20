@@ -1,10 +1,18 @@
 package com.yibo.zuul.filter;
 
-import com.netflix.zuul.ZuulFilter;
-import com.netflix.zuul.context.RequestContext;
-import com.netflix.zuul.exception.ZuulException;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
+import static com.yibo.constants.TokenConstant.BEARER;
+import static com.yibo.constants.TokenConstant.RESOURCE_LIST;
+import static com.yibo.constants.TokenConstant.TOKEN_REDIS_EXPIRATION;
+import static com.yibo.constants.TokenConstant.USER_ID;
+import static org.springframework.http.HttpHeaders.AUTHORIZATION;
+
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,14 +21,12 @@ import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
-import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
+import com.netflix.zuul.ZuulFilter;
+import com.netflix.zuul.context.RequestContext;
+import com.netflix.zuul.exception.ZuulException;
 
-import static com.yibo.constants.TokenConstant.*;
-import static org.springframework.http.HttpHeaders.AUTHORIZATION;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
 
 @Component
 public class AccessFilter extends ZuulFilter {
@@ -85,7 +91,7 @@ public class AccessFilter extends ZuulFilter {
         }
         String userId = claims.get(USER_ID).toString();
         List<String> urlList = new ArrayList<>();
-        for (LinkedHashMap<String,Object> linkedHashMap : resourceList) {
+		for (LinkedHashMap<String,Object> linkedHashMap : resourceList) {
             if (linkedHashMap.get("type").equals(1)) {
                 urlList.add(linkedHashMap.get("content").toString());
             }
