@@ -78,14 +78,14 @@ public class AccessFilter extends ZuulFilter {
             LOGGER.error("Token不一致");
             throw new ZuulException("请登陆后再操作", 401, "Token不一致");
         }
-        List<LinkedHashMap> resourceList = (List<LinkedHashMap>) claims.get(RESOURCE_LIST);
+        List<LinkedHashMap<String,Object>> resourceList = (List<LinkedHashMap<String,Object>>) claims.get(RESOURCE_LIST);
         if (CollectionUtils.isEmpty(resourceList)) {
             LOGGER.error("用户:{}没有任何访问权限", username);
             throw new ZuulException("用户没有分配任何权限", 401, "用户没有分配任何权限");
         }
         String userId = claims.get(USER_ID).toString();
         List<String> urlList = new ArrayList<>();
-        for (LinkedHashMap linkedHashMap : resourceList) {
+        for (LinkedHashMap<String,Object> linkedHashMap : resourceList) {
             if (linkedHashMap.get("type").equals(1)) {
                 urlList.add(linkedHashMap.get("content").toString());
             }

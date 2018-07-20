@@ -24,8 +24,8 @@ public class LogController {
     }
 
     @GetMapping("/logout")
-    public ResponseEntity logout(HttpServletRequest request) {
+    public ResponseEntity<Object> logout(HttpServletRequest request) {
         sysUserService.logout(request);
-        return new ResponseEntity("退出登陆成功");
+        return new ResponseEntity<>("退出登陆成功");
     }
 }

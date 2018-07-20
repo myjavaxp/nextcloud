@@ -37,19 +37,19 @@ public class GlobalExceptionHandler implements ErrorController {
 
     @GetMapping(ERROR_PATH)
     @ExceptionHandler(Exception.class)
-    public ResponseEntity errorApiHandler(HttpServletRequest request, Exception e) {
+    public ResponseEntity<Object> errorApiHandler(HttpServletRequest request, Exception e) {
         if (e instanceof CommonException) {
             CommonException commonException = (CommonException) e;
             e.printStackTrace();
-            return new ResponseEntity(commonException.getCode(), commonException.getMessage());
+            return new ResponseEntity<>(commonException.getCode(), commonException.getMessage());
         }
         if (e instanceof NullPointerException) {
             e.printStackTrace();
-            return new ResponseEntity(Status.NULL_POINTER_EXCEPTION);
+            return new ResponseEntity<>(Status.NULL_POINTER_EXCEPTION);
         }
         if (e instanceof BadSqlGrammarException) {
             e.printStackTrace();
-            return new ResponseEntity(Status.NOT_VALID_SQL);
+            return new ResponseEntity<>(Status.NOT_VALID_SQL);
         }
         WebRequest webRequest = new ServletWebRequest(request);
         Map<String, Object> errorAttributes = this.errorAttributes.getErrorAttributes(webRequest, false);
@@ -57,9 +57,9 @@ public class GlobalExceptionHandler implements ErrorController {
         e.printStackTrace();
         Object error = errorAttributes.get("error");
         if (error != null && !"None".equals(String.valueOf(error))) {
-            return new ResponseEntity(statusCode, String.valueOf(error));
+            return new ResponseEntity<>(statusCode, String.valueOf(error));
         }
-        return new ResponseEntity(statusCode, String.valueOf(errorAttributes.getOrDefault("message", "error")));
+        return new ResponseEntity<>(statusCode, String.valueOf(errorAttributes.getOrDefault("message", "error")));
     }
 
     private Integer getStatus(HttpServletRequest request) {
