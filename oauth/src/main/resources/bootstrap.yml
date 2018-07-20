@@ -48,6 +48,10 @@ spring:
   jackson:
     time-zone: GMT+8
     date-format: yyyy-MM-dd HH:mm:ss
+  boot:
+    admin:
+      client:
+        url: http://127.0.0.1:9998
 server:
   port: 8081
 mybatis:
@@ -56,3 +60,11 @@ mybatis:
 logging:
   level:
     com.yibo.oauth.dao: debug
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always

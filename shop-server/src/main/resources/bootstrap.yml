@@ -18,11 +18,23 @@ spring:
   sleuth:
     sampler:
       probability: 1
+  boot:
+    admin:
+      client:
+        url: http://127.0.0.1:9998
 server:
   port: 8082
 logging:
   level:
     com.yibo.shopserver.feign: debug
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
 
 hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds: 6000000
 ribbon:
