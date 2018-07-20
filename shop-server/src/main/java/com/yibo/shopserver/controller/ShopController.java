@@ -1,5 +1,6 @@
 package com.yibo.shopserver.controller;
 
+import com.yibo.entity.common.ResponseEntity;
 import com.yibo.shopserver.feign.HelloClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,9 +15,9 @@ public class ShopController {
     private HelloClient helloClient;
 
     @GetMapping("/hi/{name}")
-    public Map<String, String> hi(@PathVariable("name") String name) {
+    public ResponseEntity<Map<String, String>> hi(@PathVariable("name") String name) {
         Map<String, String> guest = helloClient.guest(name);
         guest.putAll(helloClient.hello(name));
-        return guest;
+        return new ResponseEntity<>(guest);
     }
 }
