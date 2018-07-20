@@ -90,7 +90,7 @@ public class AccessFilter extends ZuulFilter {
                 urlList.add(linkedHashMap.get("content").toString());
             }
         }
-        if (urlList.stream().anyMatch(a -> a.equals("*"))) {
+        if (urlList.stream().anyMatch(a -> "*".equals(a))) {
             stringRedisTemplate.expire(username, TOKEN_REDIS_EXPIRATION, TimeUnit.SECONDS);
             stringRedisTemplate.expire(token, TOKEN_REDIS_EXPIRATION, TimeUnit.SECONDS);
             requestContext.addZuulRequestHeader(AUTHORIZATION, userId + "," + username);

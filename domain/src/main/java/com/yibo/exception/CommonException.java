@@ -1,4 +1,4 @@
-package com.yibo.Exception;
+package com.yibo.exception;
 
 import com.yibo.entity.common.Status;
 import org.springframework.http.HttpStatus;

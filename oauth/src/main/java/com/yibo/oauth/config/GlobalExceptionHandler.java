@@ -1,6 +1,6 @@
 package com.yibo.oauth.config;
 
-import com.yibo.Exception.CommonException;
+import com.yibo.exception.CommonException;
 import com.yibo.entity.common.ResponseEntity;
 import com.yibo.entity.common.Status;
 import org.springframework.beans.factory.annotation.Autowired;
