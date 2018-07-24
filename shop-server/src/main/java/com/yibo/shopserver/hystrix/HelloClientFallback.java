@@ -1,5 +1,6 @@
 package com.yibo.shopserver.hystrix;
 
+import com.yibo.entity.common.ResponseEntity;
 import com.yibo.shopserver.feign.HelloClient;
 import feign.hystrix.FallbackFactory;
 import org.springframework.stereotype.Component;
@@ -24,6 +25,14 @@ public class HelloClientFallback implements FallbackFactory<HelloClient> {
                 Map<String, String> map = new HashMap<>();
                 map.put("异常", name);
                 return map;
+            }
+
+            @Override
+            public ResponseEntity<Map<String, String>> member(Long id) {
+                Map<String, String> map = new HashMap<>();
+                map.put("ID", id.toString());
+                map.put("异常", cause.getMessage());
+                return new ResponseEntity<>(map);
             }
         };
     }
