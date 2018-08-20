@@ -14,7 +14,7 @@ public class TokenUtil {
         }
         int index = header.indexOf(",");
         Long id = Long.parseLong(header.substring(0, index));
-        String username = header.substring(index + 1, header.length());
+        String username = header.substring(index + 1);
         return new SysUser(id, username);
     }
 }
