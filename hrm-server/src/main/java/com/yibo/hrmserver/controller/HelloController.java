@@ -1,6 +1,8 @@
 package com.yibo.hrmserver.controller;
 
+import com.yibo.entity.common.ResponseEntity;
 import com.yibo.entity.oauth.SysUser;
+import com.yibo.exception.CommonException;
 import com.yibo.utils.TokenUtil;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,5 +34,15 @@ public class HelloController {
         map.put("userId", sysUser.getId().toString());
         map.put("username", sysUser.getUsername());
         return map;
+    }
+
+    @GetMapping("/member/{id}")
+    public ResponseEntity<Map<String, String>> member(@PathVariable("id") Long id) {
+        if (id.equals(1L)) {
+            throw new CommonException(1, "测试熔断");
+        }
+        Map<String, String> map = new HashMap<>();
+        map.put("你好", id.toString());
+        return new ResponseEntity<>(map);
     }
 }

@@ -20,4 +20,9 @@ public class ShopController {
         guest.putAll(helloClient.hello(name));
         return new ResponseEntity<>(guest);
     }
+
+    @GetMapping("/member/{id}")
+    public ResponseEntity<Map<String, String>> member(@PathVariable("id") Long id) {
+        return helloClient.member(id);
+    }
 }
