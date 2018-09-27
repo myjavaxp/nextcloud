@@ -7,6 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.error.ErrorAttributes;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.jdbc.BadSqlGrammarException;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +18,7 @@ import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.context.request.WebRequest;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 import java.util.Map;
 
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
@@ -37,7 +41,7 @@ public class GlobalExceptionHandler implements ErrorController {
 
     @GetMapping(ERROR_PATH)
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<Object> errorApiHandler(HttpServletRequest request, Exception e) {
+    public ResponseEntity<Void> errorApiHandler(HttpServletRequest request, Exception e) {
         if (e instanceof CommonException) {
             CommonException commonException = (CommonException) e;
             e.printStackTrace();
@@ -50,6 +54,17 @@ public class GlobalExceptionHandler implements ErrorController {
         if (e instanceof BadSqlGrammarException) {
             e.printStackTrace();
             return new ResponseEntity<>(Status.NOT_VALID_SQL);
+        }
+        if (e instanceof MethodArgumentNotValidException) {
+            MethodArgumentNotValidException exception = (MethodArgumentNotValidException) e;
+            exception.printStackTrace();
+            BindingResult result = exception.getBindingResult();
+            List<FieldError> errors = result.getFieldErrors();
+            StringBuilder stringBuilder = new StringBuilder();
+            for (FieldError error : errors) {
+                stringBuilder.append(error.getDefaultMessage()).append(" ");
+            }
+            return new ResponseEntity<>(99999, stringBuilder.toString());
         }
         WebRequest webRequest = new ServletWebRequest(request);
         Map<String, Object> errorAttributes = this.errorAttributes.getErrorAttributes(webRequest, false);
