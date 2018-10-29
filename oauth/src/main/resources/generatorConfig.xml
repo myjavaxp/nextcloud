@@ -6,8 +6,6 @@
     <classPathEntry
             location="C:\Users\Yibo\.m2\repository\mysql\mysql-connector-java\5.1.46\mysql-connector-java-5.1.46.jar"/>
     <context id="context" targetRuntime="MyBatis3">
-        <plugin type="org.mybatis.generator.plugins.ToStringPlugin"/>
-        <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
         <commentGenerator>
             <property name="suppressAllComments" value="true"/>
             <property name="suppressDate" value="true"/>
@@ -34,13 +32,13 @@
         </javaClientGenerator>
 
         <table schema="cloud" tableName="sys_user" enableCountByExample="false" enableDeleteByExample="false"
-               enableSelectByExample="false" enableUpdateByExample="false"/>        
+               enableSelectByExample="false" enableUpdateByExample="false"/>
         <table schema="cloud" tableName="resource" enableCountByExample="false" enableDeleteByExample="false"
-               enableSelectByExample="false" enableUpdateByExample="false"/>        
+               enableSelectByExample="false" enableUpdateByExample="false"/>
         <table schema="cloud" tableName="role" enableCountByExample="false" enableDeleteByExample="false"
-               enableSelectByExample="false" enableUpdateByExample="false"/>        
+               enableSelectByExample="false" enableUpdateByExample="false"/>
         <table schema="cloud" tableName="role_resource" enableCountByExample="false" enableDeleteByExample="false"
-               enableSelectByExample="false" enableUpdateByExample="false"/>        
+               enableSelectByExample="false" enableUpdateByExample="false"/>
         <table schema="cloud" tableName="user_role" enableCountByExample="false" enableDeleteByExample="false"
                enableSelectByExample="false" enableUpdateByExample="false"/>
     </context>
